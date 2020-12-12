@@ -1,0 +1,41 @@
+﻿@using WebLab1_Levchenko.Blazor.Data
+<h3>CatsList</h3>
+@if (Cats == null)
+{
+    <p>Загрузка ...</p>
+}
+else
+{
+    <div class="list-group">
+        @{
+            var i = 1;
+            foreach (var cats in Cats)
+            {
+                <button type="button" 
+                        class="list-group-item list-group-item-action 
+                            @(SelectedId == cats.CatsID ? "active" : "")"
+                        @onclick="@(e => Selected(e, cats.CatsID))">
+                    @(i++) - @cats.CatsName
+                </button>
+            }
+        }
+    </div>
+}
+
+@code {
+    [Parameter]
+    public IEnumerable<CatsListViewModel> Cats { get; set; }
+    [Parameter]
+    public EventCallback<IEnumerable<CatsListViewModel>> CatsChanged { get; set; }
+
+    private int SelectedId = 0;
+    [Parameter]
+    public EventCallback<int> SelectedObjectChanged { get; set; }
+    private void Selected(MouseEventArgs e, int id)
+    {
+        SelectedId = id;
+        SelectedObjectChanged.InvokeAsync(id);
+    }
+
+}
+

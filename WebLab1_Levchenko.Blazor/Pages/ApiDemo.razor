@@ -1,0 +1,46 @@
+﻿@page "/apidemo"
+@inject IHttpClientFactory clientFactory
+@using WebLab1_Levchenko.Blazor.Data
+@using System.Text.Json;
+@using WebLab1_Levchenko.Blazor.Components; 
+
+<div class="container">
+    <CatsList @bind-Cats="cats" SelectedObjectChanged="ShowDetails"></CatsList>
+    <CatsDetails @bind-Cats="SelectedCats"></CatsDetails>
+</div>
+
+@code {
+    [Parameter]
+    public IEnumerable<CatsListViewModel> cats { get; set; }
+    [Parameter]
+    public CatsDetailsViewModel SelectedCats { get; set; }
+
+    string apiBaseAddress = "https://localhost:44330/Api/Cats";
+
+    protected override async Task OnInitializedAsync()
+    {
+        var request = new HttpRequestMessage(HttpMethod.Get, apiBaseAddress);
+        var client = clientFactory.CreateClient();
+        var response = await client.SendAsync(request);//client.GetAsync(apiBaseAddress);
+        if (response.IsSuccessStatusCode)
+        {
+            using var responseStream = await response.Content.ReadAsStreamAsync();
+            cats = await
+         JsonSerializer.DeserializeAsync<IEnumerable<CatsListViewModel>>
+           (responseStream,
+           new JsonSerializerOptions { PropertyNameCaseInsensitive = true });
+        }
+    }
+
+    private async Task ShowDetails(int id)
+    {
+        var client = clientFactory.CreateClient();
+        var response = await client.GetAsync(apiBaseAddress + $"/{id}");
+        if (response.IsSuccessStatusCode)
+        {
+            using var responseStream = await response.Content.ReadAsStreamAsync();
+            SelectedCats = await
+       JsonSerializer.DeserializeAsync<CatsDetailsViewModel>(responseStream);
+        }
+    }
+}

@@ -1,0 +1,70 @@
+﻿@{
+    ViewBag.Title = "Главная страница";
+
+    <h2>@ViewData["Text"]</h2>
+    <h2>Список</h2>
+    <ol type="A">
+        @for (int i = 1; i < 5; i++)
+        {
+            <li>элемент @i списка</li>
+        }
+    </ol>
+
+    <hr />
+
+    <h3>Форма</h3>
+
+    <form action="" method="get">
+        <select asp-items="@ViewData["Lst"] as SelectList"></select>
+
+        <div class="form-group row">
+            <div class="col-sm-2"></div>
+            <div class="col-sm-10">
+                <div class="form-check">
+                    <input class="form-check-input" type="checkbox" name="chekbox_1" id="gridCheck1">
+                    <label class="form-check-label" for="gridCheck1">Чек бокс 1</label>
+                    <p>
+                        <input class="form-check-input" type="checkbox" name="chekbox_2" id="gridCheck2">
+                        <label class="form-check-label" for="gridCheck2">Чек бокс 2</label>
+                    </p>
+                </div>
+            </div>
+        </div>
+
+        <div class="row">
+            <legend class="col-form-label col-sm-2 pt-0">Radios</legend>
+            <div class="col-sm-10">
+                <div class="form-check">
+                    <input class="form-check-input" type="radio" name="gridRadios" id="gridRadios1" value="option1" checked>
+                    <label class="form-check-label" for="gridRadios1">Радио-1</label>
+                    <input class="form-check-input" type="radio" name="gridRadios" id="gridRadios2" value="option2">
+                    <label class="form-check-label" for="gridRadios2">Радио-2</label>
+                    <input class="form-check-input" type="radio" name="gridRadios" id="gridRadios3" value="option3">
+                    <label class="form-check-label" for="gridRadios3">Радио-3</label>
+                </div>
+            </div>
+        </div>
+        <p>
+
+            <div class="form-group row">
+                <label for="Name" class="col-sm-2 col-form-label">Логин:</label>
+                <div class="col-sm-10">
+                    <input type="text" name="login" class="form-control" placeholder="Логин" id="Name" />
+                </div>
+            </div>
+        <p>
+            <div class="form-group row">
+                <label for="Password" class="col-sm-2 col-form-label">Пароль:</label>
+                <div class="col-sm-10">
+                    <input type="password" name="password" class="form-control" placeholder="Пароль" id="Password" />
+                </div>
+            </div>
+        </p>
+
+        <button type="submit" class="btn btn-primary">Отправить</button>
+        <!--<input type="button" value="Отправить" class="b1" />-->
+
+    </form>
+}
+
+

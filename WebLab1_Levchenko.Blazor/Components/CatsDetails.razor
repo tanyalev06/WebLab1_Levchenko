@@ -1,0 +1,28 @@
+﻿@using WebLab1_Levchenko.Blazor.Data;
+
+@*<h3>CatsDetails</h3>*@
+
+@if (Cats!= null)
+{
+    <img src="@imageSrc" class="img-thumbnail" width="150" />
+    <div>
+        <p>@Cats.CatsName - @Cats.CatsColor</p>
+        <div class="badge badge-info ">@Cats.CatsWeight грамм </div>
+    </div>
+}
+
+
+@code {
+
+    [Parameter]
+    public CatsDetailsViewModel Cats { get; set; }
+    [Parameter]
+    public EventCallback<IEnumerable<CatsListViewModel>> CatsChanged { get; set; }
+    string imageSrc
+    {
+        get
+        {
+            return $"https://localhost:44330/images/{Cats.Image}";
+        }
+    }
+}

@@ -1,0 +1,9 @@
+﻿@*
+    For more information on enabling MVC for empty projects, visit http://go.microsoft.com/fwlink/?LinkID=397860
+*@
+@model Cart
+<a asp-controller="Cart" asp-action="Index"
+   class="navbar-text ml-auto">
+    @Model.CatsWeight грамм <i class="fas fa-shopping-cart navcolor"></i>
+    (@Model.Count)
+</a>
